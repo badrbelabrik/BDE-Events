@@ -15,13 +15,13 @@
             </a>
 
             @auth
-                <a href="{{ route('profile.tickets') }}" class="flex flex-col items-center hover:text-indigo-600 px-1 py-1 transition">
+                <a href="#" class="flex flex-col items-center hover:text-indigo-600 px-1 py-1 transition">
                     <i class="fa-solid fa-ticket text-xl mb-0.5"></i>
                     <span class="hidden sm:block">My Tickets</span>
                 </a>
 
                 @if(auth()->user()->role === 'admin')
-                    <a href="{{ route('admin.dashboard') }}" class="flex flex-col items-center text-amber-600 hover:text-amber-700 px-1 py-1 transition font-bold">
+                    <a href="{{ route('show.dashboard') }}" class="flex flex-col items-center text-amber-600 hover:text-amber-700 px-1 py-1 transition font-bold">
                         <i class="fa-solid fa-chart-line text-xl mb-0.5"></i>
                         <span class="hidden sm:block">Admin</span>
                     </a>
@@ -45,13 +45,13 @@
                             <p class="text-xs text-gray-500 capitalize">{{ auth()->user()->role }} Account</p>
                         </div>
 
-                        <a href="{{ route('profile.tickets') }}" class="block px-4 py-2 hover:bg-gray-100 text-left transition">
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-left transition">
                             <i class="fa-solid fa-ticket mr-2 text-gray-400"></i> My Pass & Tickets
                         </a>
 
                         <div class="border-t border-gray-100 my-1"></div>
 
-                        <form action="{{ route('logout') }}" method="POST">
+                        <form action="{{route('logout')}}" method="POST">
                             @csrf
                             <button type="submit" class="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 transition cursor-pointer font-medium">
                                 <i class="fa-solid fa-arrow-right-from-bracket mr-2 text-xs"></i> Sign Out

@@ -16,7 +16,7 @@ class Event extends Model
         'location',
         'price',
         'max_capacity',
-        'created_by'
+        'user_id'
     ];
 
     public function user(): BelongsTo{

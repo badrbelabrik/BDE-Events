@@ -140,7 +140,7 @@
                     </button>
                 </div>
 
-                <form action="#" method="POST" class="space-y-4">
+                <form action="{{route('store.event')}}" method="POST" class="space-y-4">
                     @csrf
 
                     <div>
@@ -151,12 +151,32 @@
                     <div class="grid grid-cols-2 gap-3">
                         <div>
                             <label class="block text-xs font-semibold text-gray-700 uppercase mb-1">Date</label>
-                            <input type="date" name="event_date" required class="w-full border border-gray-300 rounded-md py-2 px-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                            <input type="date" name="date" required class="w-full border border-gray-300 rounded-md py-2 px-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-gray-700 uppercase mb-1">Total Seats (Capacity)</label>
-                            <input type="number" name="capacity" min="1" required placeholder="100" class="w-full border border-gray-300 rounded-md py-2 px-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                            <input type="number" name="max_capacity" min="1" required placeholder="100" class="w-full border border-gray-300 rounded-md py-2 px-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                         </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 uppercase mb-1">TIME</label>
+                        <input type="time" name="time" required class="w-full border border-gray-300 rounded-md py-2 px-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 uppercase mb-1">
+                            Price
+                        </label>
+
+                        <input
+                            type="number"
+                            name="price"
+                            step="0.01"
+                            min="0"
+                            required
+                            placeholder="0.00"
+                            class="w-full border border-gray-300 rounded-md py-2 px-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                     </div>
 
                     <div>

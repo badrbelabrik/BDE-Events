@@ -11,7 +11,7 @@ class Reservation extends Model
     protected $fillable = [
         'reservation_code',
         'event_id',
-        'student_id',
+        'user_id',
     ];
 
     public function user(): BelongsTo{
