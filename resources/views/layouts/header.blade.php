@@ -29,25 +29,17 @@
 
                 <div class="border-l border-gray-200 h-8 mx-2 hidden sm:block"></div>
 
-                <!-- User Dropdown (Alpine.js) -->
-                <div class="relative" x-data="{ open: false }" @click.away="open = false">
-                    <button @click="open = !open" class="flex flex-col items-center hover:text-gray-900 px-1 py-1 transition focus:outline-none cursor-pointer">
+                <!-- User Dropdown (Pure CSS focus-within/group) -->
+                <div class="relative group">
+                    <button type="button" class="flex flex-col items-center hover:text-gray-900 px-1 py-1 transition focus:outline-none cursor-pointer">
                         <div class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-600 font-bold text-xs flex items-center justify-center mb-0.5 border border-indigo-200">
                             {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                         </div>
-                        <span class="hidden sm:block">Me <i class="fa-solid fa-caret-down text-[10px]" :class="{ 'transform rotate-180': open }"></i></span>
+                        <span class="hidden sm:block">Me <i class="fa-solid fa-caret-down text-[10px] group-hover:rotate-180 transition-transform"></i></span>
                     </button>
 
-                    <div x-show="open"
-                         x-transition:enter="transition ease-out duration-100"
-                         x-transition:enter-start="transform opacity-0 scale-95"
-                         x-transition:enter-end="transform opacity-100 scale-100"
-                         x-transition:leave="transition ease-in duration-75"
-                         x-transition:leave-start="transform opacity-100 scale-100"
-                         x-transition:leave-end="transform opacity-0 scale-95"
-                         class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-50 text-sm font-normal text-gray-700"
-                         style="display: none;">
-
+                    <!-- Dropdown Menu -->
+                    <div class="absolute right-0 mt-0 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-50 text-sm font-normal text-gray-700 hidden group-hover:block group-focus-within:block">
                         <div class="px-4 py-2 border-b border-gray-100">
                             <p class="font-semibold text-gray-900 text-sm leading-tight">{{ auth()->user()->name }}</p>
                             <p class="text-xs text-gray-500 capitalize">{{ auth()->user()->role }} Account</p>
