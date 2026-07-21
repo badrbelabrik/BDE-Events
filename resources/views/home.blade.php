@@ -3,12 +3,12 @@
 @section('content')
     <div class="space-y-6">
 
-        <!-- HERO / BANNER CARD -->
+        <!-- Hero / Banner Card -->
         <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-8 md:p-12 text-center relative overflow-hidden">
             <div class="max-w-3xl mx-auto">
-            <span class="inline-block px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full text-xs font-bold uppercase tracking-wider mb-3 border border-indigo-100">
-                Official BDE Campus Platform
-            </span>
+                <span class="inline-block px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full text-xs font-bold uppercase tracking-wider mb-3 border border-indigo-100">
+                    Official BDE Campus Platform
+                </span>
                 <h1 class="text-3xl sm:text-5xl font-extrabold text-gray-900 mb-4 leading-tight">
                     Centralized Campus Event Hub
                 </h1>
@@ -33,10 +33,10 @@
             </div>
         </div>
 
-        <!-- PLATFORM FEATURES GRID -->
+        <!-- Features Grid -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-            <!-- FEATURE 1: 1-CLICK RESERVATION -->
+            <!-- Feature 1: 1-Click Reservation -->
             <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:border-indigo-300 transition">
                 <div class="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-lg flex items-center justify-center mb-4">
                     <i class="fa-solid fa-bolt text-lg"></i>
@@ -47,7 +47,7 @@
                 </p>
             </div>
 
-            <!-- FEATURE 2: DIGITAL PASS GENERATOR -->
+            <!-- Feature 2: Digital Pass Generator -->
             <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:border-indigo-300 transition">
                 <div class="w-10 h-10 bg-amber-50 text-amber-600 rounded-lg flex items-center justify-center mb-4">
                     <i class="fa-solid fa-ticket text-lg"></i>
@@ -58,7 +58,7 @@
                 </p>
             </div>
 
-            <!-- FEATURE 3: ADMIN DASHBOARD -->
+            <!-- Feature 3: Admin Dashboard -->
             <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:border-indigo-300 transition">
                 <div class="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-lg flex items-center justify-center mb-4">
                     <i class="fa-solid fa-chart-pie text-lg"></i>
