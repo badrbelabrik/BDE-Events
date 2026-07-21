@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\Auth;
 class DashboardController extends Controller
 {
     public function index(){
-        return view('dashboard');
+        $events = Event::with('user')->latest()->get();
+
+        return view('dashboard', compact('events'));
     }
 
     public function store(Request $request){

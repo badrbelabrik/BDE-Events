@@ -86,34 +86,36 @@
                     <thead>
                     <tr class="bg-gray-50 border-b border-gray-200 text-xs font-semibold text-gray-600 uppercase tracking-wider">
                         <th class="py-3 px-4">Event Details</th>
-                        <th class="py-3 px-4">Date & Location</th>
+                        <th class="py-3 px-4">Date</th>
+                        <th class="py-3 px-4">Location</th>
                         <th class="py-3 px-4">Capacity / Booked</th>
-                        <th class="py-3 px-4">Status</th>
+                        <th class="py-3 px-4">Creator</th>
                         <th class="py-3 px-4 text-right">Actions</th>
                     </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 text-sm">
+                    @forelse($events as $event)
                     <tr class="hover:bg-gray-50/80 transition">
                         <td class="py-3 px-4">
-                            <div class="font-bold text-gray-900">Annual BDE Gala Night 2026</div>
-                            <div class="text-xs text-gray-500 line-clamp-1">Campus main hall formal evening celebration with music.</div>
+                            <div class="font-bold text-gray-900">{{$event->title}}</div>
                         </td>
                         <td class="py-3 px-4 text-xs">
-                            <div class="font-semibold text-gray-800"><i class="fa-regular fa-calendar mr-1 text-gray-400"></i> Oct 24, 2026</div>
-                            <div class="text-gray-500"><i class="fa-solid fa-location-dot mr-1 text-gray-400"></i> Main Campus Auditorium</div>
+                            <div class="font-semibold text-gray-800"><i class="fa-regular fa-calendar mr-1 text-gray-400"></i>
+                                {{ \Carbon\Carbon::parse($event->date)->format('d M Y') }}</div>
+                            <div class="text-gray-500"><i class="fa-solid fa-location-dot mr-1 text-gray-400"></i>{{ \Carbon\Carbon::parse($event->time)->format('H:i') }}</div>
                         </td>
+                        <td>
+                            <div class="text-gray-500">{{$event->location}}</div>
+                        </td>
+
                         <td class="py-3 px-4">
                             <div class="flex items-center justify-between text-xs mb-1">
-                                <span class="font-semibold text-gray-700">185 / 200</span>
-                                <span class="text-gray-500 font-mono">92%</span>
-                            </div>
-                            <div class="w-28 bg-gray-200 rounded-full h-1.5 overflow-hidden">
-                                <div class="bg-indigo-600 h-1.5 rounded-full" style="width: 92%"></div>
+                                <span class="font-semibold text-gray-700">{{ $event->reservations->count() }} / {{ $event->max_capacity }}</span>
                             </div>
                         </td>
                         <td class="py-3 px-4">
                             <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">
-                                Open
+                                {{ $event->user->name }}
                             </span>
                         </td>
                         <td class="py-3 px-4 text-right space-x-2">
@@ -125,6 +127,14 @@
                             </button>
                         </td>
                     </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6" class="py-8 text-center text-gray-500">
+                                    No events available.
+                                </td>
+                            </tr>
+
+                        @endforelse
                     </tbody>
                 </table>
             </div>
