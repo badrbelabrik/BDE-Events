@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('reservation_code');
             $table->unsignedBigInteger('event_id');
-            $table->unsignedBigInteger('student_id');
+            $table->unsignedBigInteger('user_id');
             $table->foreign('event_id')->references('id')->on('events');
-            $table->foreign('student_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

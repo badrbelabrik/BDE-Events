@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('location');
             $table->decimal('price');
             $table->unsignedBigInteger('max_capacity');
-            $table->unsignedBigInteger('created_by');
-            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
