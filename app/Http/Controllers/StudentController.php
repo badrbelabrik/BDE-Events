@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\Reservation;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Pest\Support\Str;
 
 class StudentController extends Controller
 {
@@ -13,4 +16,24 @@ class StudentController extends Controller
 
         return view('student', compact('events'));
     }
+    public function subscribe(Event $event){
+
+        if ($event->reservations()->count() >= $event->max_capacity) {
+            return back()->with('error', 'This event is full.');
+        }
+
+        if ($event->reservations()->where('user_id', Auth::id())->exists()) {
+            return back()->with('error', 'You are already registered.');
+        }
+
+        Reservation::create([
+            'reservation_code' => 'BDE-2026-' . strtoupper(Str::random(5)),
+            'event_id' => $event->id,
+            'user_id' => Auth::id(),
+        ]);
+
+        return back()->with('success', 'Reservation successful!');
+    }
+
+
 }

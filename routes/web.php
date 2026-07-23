@@ -23,3 +23,4 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('aut
 Route::post('storeEvent', [DashboardController::class, 'store'])->middleware('auth','isAdmin')->name('store.event');
 
 Route::get('student', [StudentController::class, 'index'])->name('student.space');
+Route::post('reserve/{event}', [StudentController::class, 'subscribe'])->name('reserve');

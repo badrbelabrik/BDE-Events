@@ -190,7 +190,7 @@
 
                         <!-- Subscribe Button Form -->
                         <div class="pt-2">
-                            <form action="#" method="POST">
+                            <form action="{{route('reserve', $event)}}" method="POST">
                                 @csrf
                                 <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs py-2.5 px-3 rounded-lg transition flex items-center justify-center gap-1.5 shadow-xs cursor-pointer">
                                     <i class="fa-solid fa-plus"></i> Subscribe to Event
