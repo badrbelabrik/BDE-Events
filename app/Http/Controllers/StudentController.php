@@ -26,10 +26,15 @@ class StudentController extends Controller
             return back()->with('error', 'You are already registered in this event.');
         }
 
-        Reservation::create([
+        $reservation = Reservation::create([
             'reservation_code' => 'BDE-2026-' . strtoupper(Str::random(5)),
             'event_id' => $event->id,
             'user_id' => Auth::id(),
+        ]);
+
+        Ticket::create([
+            'reservation_id' => $reservation->id,
+            'ticket_code' => 'TKT-' . strtoupper(Str::random(8)),
         ]);
 
         return back()->with('success', 'Reservation successful!');
