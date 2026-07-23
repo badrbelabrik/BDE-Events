@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -20,3 +21,5 @@ Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth','isAdmin')->name('show.dashboard');
 Route::post('storeEvent', [DashboardController::class, 'store'])->middleware('auth','isAdmin')->name('store.event');
+
+Route::get('student', [StudentController::class, 'index'])->name('student.space');

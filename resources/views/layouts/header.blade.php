@@ -45,7 +45,7 @@
                             <p class="text-xs text-gray-500 capitalize">{{ auth()->user()->role }} Account</p>
                         </div>
 
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-left transition">
+                        <a href="{{route('student.space')}}" class="block px-4 py-2 hover:bg-gray-100 text-left transition">
                             <i class="fa-solid fa-ticket mr-2 text-gray-400"></i> My Pass & Tickets
                         </a>
 
