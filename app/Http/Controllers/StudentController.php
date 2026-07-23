@@ -23,7 +23,7 @@ class StudentController extends Controller
         }
 
         if ($event->reservations()->where('user_id', Auth::id())->exists()) {
-            return back()->with('error', 'You are already registered.');
+            return back()->with('error', 'You are already registered in this event.');
         }
 
         Reservation::create([

@@ -1,8 +1,29 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="space-y-8">
+    @if(session('success'))
+        <div id="flash-message" class="mb-4 rounded-lg bg-green-100 border border-green-300 text-green-800 px-4 py-3">
+            {{ session('success') }}
+        </div>
+    @endif
 
+    @if(session('error'))
+        <div id="flash-message" class="mb-4 rounded-lg bg-red-100 border border-red-300 text-red-800 px-4 py-3">
+            {{ session('error') }}
+        </div>
+    @endif
+    @if(session('success') || session('error'))
+        <script>
+            setTimeout(() => {
+                const alert = document.getElementById('flash-message');
+
+                if (alert) {
+                    alert.remove();
+                }
+            }, 3000);
+        </script>
+    @endif
+    <div class="space-y-8">
         <!-- Page Title & Header -->
         <div class="bg-white border border-gray-200 rounded-xl p-6 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
@@ -152,7 +173,6 @@
             <div class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @forelse($events ?? [] as $event)
                     <div class="border border-gray-200 rounded-xl p-5 hover:border-indigo-300 transition bg-white flex flex-col justify-between space-y-4">
-
                         <!-- Title & Price -->
                         <div class="space-y-2">
                             <div class="flex justify-between items-start gap-2">
@@ -206,6 +226,5 @@
                 @endforelse
             </div>
         </div>
-
     </div>
 @endsection
