@@ -21,7 +21,8 @@ Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth','isAdmin')->name('show.dashboard');
 Route::post('storeEvent', [DashboardController::class, 'store'])->middleware('auth','isAdmin')->name('store.event');
-Route::delete('delete/event/{event}', [DashboardController::class, 'destroy'])->middleware('isAdmin')->name('delete.event');
+Route::delete('delete/event/{event}', [DashboardController::class, 'destroy'])->middleware('auth','isAdmin')->name('delete.event');
+Route::put('update/event/{event}', [DashboardController::class, 'update'])->middleware('auth','isAdmin')->name('update.event');
 
 Route::get('student', [StudentController::class, 'index'])->middleware('auth')->name('student.space');
 Route::post('reserve/{event}', [StudentController::class, 'subscribe'])->middleware('auth')->name('reserve');
