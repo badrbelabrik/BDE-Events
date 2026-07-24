@@ -42,35 +42,6 @@
         </div>
 
         <!-- Student Digital Membership Card -->
-        <div class="bg-gradient-to-r from-indigo-700 to-indigo-900 text-white rounded-2xl p-6 shadow-md relative overflow-hidden">
-            <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl pointer-events-none">
-                <i class="fa-solid fa-id-card"></i>
-            </div>
-
-            <div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-                <div class="flex items-center gap-4">
-                    <div class="w-16 h-16 rounded-full bg-white/10 border-2 border-white/20 text-white font-black text-2xl flex items-center justify-center shrink-0">
-                        {{ strtoupper(substr(auth()->user()->name ?? 'S', 0, 1)) }}
-                    </div>
-                    <div>
-                        <span class="text-indigo-200 text-xs uppercase tracking-wider font-semibold">Active Student Member</span>
-                        <h2 class="text-xl font-bold text-white">{{ auth()->user()->name ?? 'Student Name' }}</h2>
-                        <p class="text-xs text-indigo-200 mt-0.5"><i class="fa-solid fa-envelope mr-1 opacity-70"></i> {{ auth()->user()->email ?? 'student@campus.edu' }}</p>
-                    </div>
-                </div>
-
-                <div class="bg-white/10 border border-white/15 rounded-xl p-3 backdrop-blur-xs flex items-center gap-4 w-full md:w-auto justify-between">
-                    <div>
-                        <p class="text-[10px] text-indigo-200 uppercase tracking-widest font-semibold">Student ID Code</p>
-                        <p class="text-sm font-mono font-bold tracking-wider text-white">BDE-{{ auth()->user()->id ?? 'PASS' }}-2026</p>
-                    </div>
-                    <div class="bg-white p-1 rounded">
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=50x50&data=BDE-STUDENT-{{ auth()->user()->id ?? 'PASS' }}" alt="Student QR Code" class="w-10 h-10">
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- SECTION 1: Active Subscriptions / Reserved Passes -->
         <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
             <div class="p-5 border-b border-gray-200 flex justify-between items-center bg-gray-50/50">
@@ -83,65 +54,57 @@
             </div>
 
             <div class="p-6 grid grid-cols-1 lg:grid-cols-2 gap-4">
-                @forelse($subscribedEvents ?? [] as $subscribedEvent)
+                @forelse($reservations ?? [] as $reservation)
                     <div class="border border-gray-200 rounded-xl p-5 hover:border-indigo-300 transition bg-white flex flex-col justify-between space-y-4">
                         <div class="flex justify-between items-start gap-2">
                             <div>
-                                <h3 class="font-bold text-gray-900 text-base">{{ $subscribedEvent->title }}</h3>
-                                <p class="text-xs text-gray-500 mt-0.5"><i class="fa-solid fa-location-dot mr-1 text-gray-400"></i> {{ $subscribedEvent->location }}</p>
+                                <h3 class="font-bold text-gray-900 text-base">{{ $reservation->event->title }}</h3>
+                                <p class="text-xs text-gray-500 mt-0.5"><i class="fa-solid fa-location-dot mr-1 text-gray-400"></i> {{ $reservation->event->location }}</p>
                             </div>
                             <span class="text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full">
                             Subscribed
                         </span>
                         </div>
 
-                        <p class="text-xs text-gray-600 line-clamp-2">{{ $subscribedEvent->description }}</p>
+                        <p class="text-xs text-gray-600 line-clamp-2">{{ $reservation->event->description }}</p>
 
                         <div class="bg-gray-50 p-3 rounded-lg text-xs space-y-1 text-gray-600">
                             <div class="flex justify-between">
                                 <span class="text-gray-400">Date & Time:</span>
-                                <span class="font-semibold text-gray-800">{{ $subscribedEvent->date }} • {{ $subscribedEvent->time }}</span>
+                                <span class="font-semibold text-gray-800">{{ $reservation->event->date }} • {{ $reservation->event->time }}</span>
                             </div>
                             <div class="flex justify-between">
                                 <span class="text-gray-400">Price:</span>
                                 <span class="font-semibold text-indigo-600">
-                                {{ $subscribedEvent->price > 0 ? '$' . number_format($subscribedEvent->price, 2) : 'Free' }}
+                                {{ $reservation->event->price > 0 ? '$' . number_format($reservation->event->price, 2) : 'Free' }}
                             </span>
                             </div>
                         </div>
 
                         <div class="flex items-center justify-between pt-2 border-t border-gray-100">
-                            <button onclick="document.getElementById('passModal-{{ $subscribedEvent->id }}').showModal()" class="inline-flex items-center text-xs font-semibold text-indigo-600 hover:text-indigo-800 transition cursor-pointer">
+                            <button onclick="document.getElementById('passModal-{{ $reservation->event->id }}').showModal()" class="inline-flex items-center text-xs font-semibold text-indigo-600 hover:text-indigo-800 transition cursor-pointer">
                                 <i class="fa-solid fa-qrcode mr-1.5"></i> View Pass
                             </button>
-
-                            <form action="{{ route('events.unsubscribe', $subscribedEvent->id) }}" method="POST" onsubmit="return confirm('Cancel subscription?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-xs text-red-500 hover:text-red-700 font-medium transition cursor-pointer">
-                                    Cancel Subscription
-                                </button>
-                            </form>
                         </div>
                     </div>
 
                     <!-- QR Modal per Subscribed Event -->
-                    <dialog id="passModal-{{ $subscribedEvent->id }}" class="rounded-xl border border-gray-200 shadow-xl p-0 w-full max-w-sm backdrop:bg-gray-900/50">
+                    <dialog id="passModal-{{ $reservation->event->id }}" class="rounded-xl border border-gray-200 shadow-xl p-0 w-full max-w-sm backdrop:bg-gray-900/50">
                         <div class="p-6 bg-white text-center space-y-4">
                             <div class="flex justify-between items-center border-b border-gray-100 pb-3">
                                 <h3 class="text-sm font-bold text-gray-900">Event Pass</h3>
-                                <button onclick="document.getElementById('passModal-{{ $subscribedEvent->id }}').close()" class="text-gray-400 hover:text-gray-600 cursor-pointer">
+                                <button onclick="document.getElementById('passModal-{{ $reservation->event->id }}').close()" class="text-gray-400 hover:text-gray-600 cursor-pointer">
                                     <i class="fa-solid fa-xmark text-lg"></i>
                                 </button>
                             </div>
 
                             <div class="bg-gray-50 p-4 rounded-xl border border-dashed border-gray-300 space-y-3">
-                                <p class="text-xs font-bold text-indigo-600 uppercase tracking-widest">{{ $subscribedEvent->title }}</p>
+                                <p class="text-xs font-bold text-indigo-600 uppercase tracking-widest">{{ $reservation->event->title }}</p>
                                 <div class="flex justify-center">
-                                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=EVENT-{{ $subscribedEvent->id }}-USER-{{ auth()->id() }}" alt="QR Code" class="w-36 h-36 border p-1 bg-white rounded">
+                                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=EVENT-{{ $reservation->event->id }}-USER-{{ auth()->id() }}" alt="QR Code" class="w-36 h-36 border p-1 bg-white rounded">
                                 </div>
                                 <div>
-                                    <p class="text-xs text-gray-400 font-mono">TKT-{{ $subscribedEvent->id }}-{{ auth()->id() }}</p>
+                                    <p class="text-xs text-gray-400 font-mono">Ticket code: {{ $reservation->ticket->ticket_code }}</p>
                                     <p class="text-xs font-semibold text-gray-800 mt-1">{{ auth()->user()->name }}</p>
                                 </div>
                             </div>

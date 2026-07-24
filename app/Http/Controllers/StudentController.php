@@ -13,11 +13,11 @@ class StudentController extends Controller
 {
     public function index(){
         $events = Event::with('user')->latest()->get();
-        $tickets = Reservation::with(['event', 'ticket'])
+        $reservations = Reservation::with(['event', 'ticket'])
             ->where('user_id', Auth::id())
             ->get();
 
-        return view('student', compact('events','tickets'));
+        return view('student', compact('events','reservations'));
     }
     public function subscribe(Event $event){
 

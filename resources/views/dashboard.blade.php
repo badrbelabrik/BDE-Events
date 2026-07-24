@@ -122,9 +122,13 @@
                             <button class="text-gray-400 hover:text-indigo-600 transition" title="Edit Event">
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </button>
-                            <button class="text-gray-400 hover:text-red-600 transition" title="Delete Event">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
+                            <form action="{{route('delete.event', $event)}}" method="POST">
+                                @method('DELETE')
+                                <button class="text-gray-400 hover:text-red-600 transition" title="Delete Event">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </form>
+
                         </td>
                     </tr>
                         @empty

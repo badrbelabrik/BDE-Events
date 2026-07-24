@@ -32,4 +32,14 @@ class DashboardController extends Controller
             ->route('show.dashboard')
             ->with('success', 'Event created successfully.');
     }
+
+    public function update(){
+
+    }
+
+    public function destroy(Event $event){
+        $event->delete();
+
+        return redirect()->route('show.dashboard');
+    }
 }
