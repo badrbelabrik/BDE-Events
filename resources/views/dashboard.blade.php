@@ -199,6 +199,9 @@
                         <div>
                             <label class="block text-xs font-semibold text-gray-700 uppercase mb-1">Date</label>
                             <input type="date" name="date" required class="w-full border border-gray-300 rounded-md py-2 px-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                            @error('date')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-gray-700 uppercase mb-1">Total Seats (Capacity)</label>
@@ -268,6 +271,9 @@
                         <div>
                             <label class="block text-xs font-semibold text-gray-700 uppercase mb-1">Date</label>
                             <input id="editDate" type="date" name="date" required class="w-full border border-gray-300 rounded-md py-2 px-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                            @error('date')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-gray-700 uppercase mb-1">Total Seats (Capacity)</label>
@@ -318,4 +324,11 @@
         </dialog>
 
     </div>
+    @if ($errors->any())
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                document.getElementById('createEventModal').showModal();
+            });
+        </script>
+    @endif
 @endsection
