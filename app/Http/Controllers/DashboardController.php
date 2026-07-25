@@ -33,8 +33,22 @@ class DashboardController extends Controller
             ->with('success', 'Event created successfully.');
     }
 
-    public function update(){
+    public function update(Request $request, Event $event){
+        $validated = $request->validate([
+            'title' => 'required|max:255',
+            'description' => 'required',
+            'date' => 'required|date',
+            'time' => 'required|date_format:H:i',
+            'location' => 'required|max:255',
+            'price' => 'required|numeric|min:0',
+            'max_capacity' => 'required|integer|min:1',
+        ]);
 
+        $event->update($validated);
+
+        return redirect()
+            ->route('show.dashboard')
+            ->with('success', 'Event updated successfully.');
     }
 
     public function destroy(Event $event){

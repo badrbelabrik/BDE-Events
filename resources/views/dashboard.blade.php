@@ -119,9 +119,41 @@
                             </span>
                         </td>
                         <td class="py-3 px-4 text-right space-x-2">
-                            <button onclick="document.getElementById('createEventModal').showModal()" class="text-gray-400 hover:text-indigo-600 transition" title="Edit Event">
+                            <button
+                                class="editEventBtn"
+                                data-id="{{ $event->id }}"
+                                data-title="{{ $event->title }}"
+                                data-description="{{ $event->description }}"
+                                data-date="{{ $event->date }}"
+                                data-time="{{ $event->time }}"
+                                data-location="{{ $event->location }}"
+                                data-price="{{ $event->price }}"
+                                data-capacity="{{ $event->max_capacity }}"
+                            >
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </button>
+                            <script>
+                                document.querySelectorAll('.editEventBtn').forEach(button => {
+
+                                    button.addEventListener('click', function () {
+
+                                        document.getElementById('editTitle').value = this.dataset.title;
+                                        document.getElementById('editDate').value = this.dataset.date;
+                                        document.getElementById('editTime').value =
+                                            this.dataset.time.substring(0, 5);
+                                        document.getElementById('editPrice').value = this.dataset.price;
+                                        document.getElementById('editCapacity').value = this.dataset.capacity;
+                                        document.getElementById('editLocation').value = this.dataset.location;
+                                        document.getElementById('editDescription').value = this.dataset.description;
+
+                                        document.getElementById('editEventForm').action =
+                                            `/update/event/${this.dataset.id}`;
+
+                                        document.getElementById('editEventModal').showModal();
+                                    });
+
+                                });
+                            </script>
 
                             <form action="{{route('delete.event', $event)}}" method="POST">
                                 @method('DELETE')
@@ -224,28 +256,28 @@
                     </button>
                 </div>
 
-                <form action="{{route('update.event')}}" method="POST" class="space-y-4">
+                <form id="editEventForm" action="" method="POST" class="space-y-4">
+                    @method('PUT')
                     @csrf
-
                     <div>
                         <label class="block text-xs font-semibold text-gray-700 uppercase mb-1">Event Title</label>
-                        <input type="text" name="title" required placeholder="e.g., Spring Welcome Party" class="w-full border border-gray-300 rounded-md py-2 px-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                        <input id="editTitle" type="text" name="title" required placeholder="e.g., Spring Welcome Party" class="w-full border border-gray-300 rounded-md py-2 px-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                     </div>
 
                     <div class="grid grid-cols-2 gap-3">
                         <div>
                             <label class="block text-xs font-semibold text-gray-700 uppercase mb-1">Date</label>
-                            <input type="date" name="date" required class="w-full border border-gray-300 rounded-md py-2 px-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                            <input id="editDate" type="date" name="date" required class="w-full border border-gray-300 rounded-md py-2 px-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-gray-700 uppercase mb-1">Total Seats (Capacity)</label>
-                            <input type="number" name="max_capacity" min="1" required placeholder="100" class="w-full border border-gray-300 rounded-md py-2 px-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                            <input id="editCapacity" type="number" name="max_capacity" min="1" required placeholder="100" class="w-full border border-gray-300 rounded-md py-2 px-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                         </div>
                     </div>
 
                     <div>
                         <label class="block text-xs font-semibold text-gray-700 uppercase mb-1">TIME</label>
-                        <input type="time" name="time" required class="w-full border border-gray-300 rounded-md py-2 px-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                        <input id="editTime" type="time" name="time" required class="w-full border border-gray-300 rounded-md py-2 px-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                     </div>
 
                     <div>
@@ -253,7 +285,7 @@
                             Price
                         </label>
 
-                        <input
+                        <input id="editPrice"
                             type="number"
                             name="price"
                             step="0.01"
@@ -265,16 +297,16 @@
 
                     <div>
                         <label class="block text-xs font-semibold text-gray-700 uppercase mb-1">Location</label>
-                        <input type="text" name="location" required placeholder="e.g., Student Center Room B" class="w-full border border-gray-300 rounded-md py-2 px-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                        <input id="editLocation" type="text" name="location" required placeholder="e.g., Student Center Room B" class="w-full border border-gray-300 rounded-md py-2 px-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                     </div>
 
                     <div>
                         <label class="block text-xs font-semibold text-gray-700 uppercase mb-1">Description</label>
-                        <textarea name="description" rows="3" placeholder="Brief event description..." class="w-full border border-gray-300 rounded-md py-2 px-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"></textarea>
+                        <textarea id="editDescription" name="description" rows="3" placeholder="Brief event description..." class="w-full border border-gray-300 rounded-md py-2 px-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"></textarea>
                     </div>
 
                     <div class="flex justify-end gap-2 pt-2 border-t border-gray-100">
-                        <button type="button" onclick="document.getElementById('createEventModal').close()" class="px-4 py-2 border border-gray-300 rounded-md text-xs font-semibold text-gray-700 hover:bg-gray-50 transition">
+                        <button type="button" onclick="document.getElementById('editEventModal').close()" class="px-4 py-2 border border-gray-300 rounded-md text-xs font-semibold text-gray-700 hover:bg-gray-50 transition">
                             Cancel
                         </button>
                         <button type="submit" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md text-xs font-semibold transition shadow-sm">
