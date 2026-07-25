@@ -13,8 +13,11 @@ class StudentController extends Controller
 {
     public function index(){
         $events = Event::with('user')->latest()->get();
+        $reservations = Reservation::with(['event', 'ticket'])
+            ->where('user_id', Auth::id())
+            ->get();
 
-        return view('student', compact('events'));
+        return view('student', compact('events','reservations'));
     }
     public function subscribe(Event $event){
 
@@ -26,13 +29,29 @@ class StudentController extends Controller
             return back()->with('error', 'You are already registered in this event.');
         }
 
-        Reservation::create([
+        $reservation = Reservation::create([
             'reservation_code' => 'BDE-2026-' . strtoupper(Str::random(5)),
             'event_id' => $event->id,
             'user_id' => Auth::id(),
         ]);
 
+        Ticket::create([
+            'reservation_id' => $reservation->id,
+            'ticket_code' => 'TKT-' . strtoupper(Str::random(8)),
+        ]);
+
         return back()->with('success', 'Reservation successful!');
+    }
+
+    public function unsubscribe(Reservation $reservation){
+        if ($reservation->user_id !== Auth::id()) {
+            abort(403);
+        }
+        $reservation->ticket()->delete();
+        $reservation->delete();
+        return redirect()
+            ->route('student.space')
+            ->with('success', 'Reservation cancelled successfully.');
     }
 
 

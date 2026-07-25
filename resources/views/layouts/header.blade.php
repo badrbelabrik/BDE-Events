@@ -9,21 +9,17 @@
 
         <!-- Navigation Links -->
         <div class="flex items-center space-x-6 text-gray-500 text-xs">
-            <a href="{{ url('/') }}" class="flex flex-col items-center text-gray-900 border-b-2 border-indigo-600 px-1 py-1 font-semibold">
-                <i class="fa-solid fa-house text-xl mb-0.5 text-indigo-600"></i>
-                <span class="hidden sm:block">Home</span>
-            </a>
 
             @auth
-                <a href="#" class="flex flex-col items-center hover:text-indigo-600 px-1 py-1 transition">
-                    <i class="fa-solid fa-ticket text-xl mb-0.5"></i>
-                    <span class="hidden sm:block">My Tickets</span>
-                </a>
-
                 @if(auth()->user()->role === 'admin')
                     <a href="{{ route('show.dashboard') }}" class="flex flex-col items-center text-amber-600 hover:text-amber-700 px-1 py-1 transition font-bold">
                         <i class="fa-solid fa-chart-line text-xl mb-0.5"></i>
                         <span class="hidden sm:block">Admin</span>
+                    </a>
+                @else
+                    <a href="{{route('student.space')}}" class="flex flex-col items-center hover:text-indigo-600 px-1 py-1 transition">
+                        <i class="fa-solid fa-ticket text-xl mb-0.5"></i>
+                        <span class="hidden sm:block">My Tickets</span>
                     </a>
                 @endif
 
@@ -44,10 +40,6 @@
                             <p class="font-semibold text-gray-900 text-sm leading-tight">{{ auth()->user()->name }}</p>
                             <p class="text-xs text-gray-500 capitalize">{{ auth()->user()->role }} Account</p>
                         </div>
-
-                        <a href="{{route('student.space')}}" class="block px-4 py-2 hover:bg-gray-100 text-left transition">
-                            <i class="fa-solid fa-ticket mr-2 text-gray-400"></i> My Pass & Tickets
-                        </a>
 
                         <div class="border-t border-gray-100 my-1"></div>
 

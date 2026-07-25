@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('ticket_code');
             $table->unsignedBigInteger('reservation_id');
-            $table->foreign('reservation_id')->references('id')->on('reservations');
+            $table->foreign('reservation_id')->references('id')->on('reservations')->onDelete('cascade');
             $table->timestamps();
         });
     }
