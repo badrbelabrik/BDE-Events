@@ -85,6 +85,13 @@
                             <button onclick="document.getElementById('passModal-{{ $reservation->event->id }}').showModal()" class="inline-flex items-center text-xs font-semibold text-indigo-600 hover:text-indigo-800 transition cursor-pointer">
                                 <i class="fa-solid fa-qrcode mr-1.5"></i> View Pass
                             </button>
+                            <form action="{{route('cancel.reservation',$reservation)}}" method="POST" onsubmit="return confirm('Cancel subscription?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-xs text-red-500 hover:text-red-700 font-medium transition cursor-pointer">
+                                    Cancel Subscription
+                                </button>
+                            </form>
                         </div>
                     </div>
 

@@ -43,5 +43,16 @@ class StudentController extends Controller
         return back()->with('success', 'Reservation successful!');
     }
 
+    public function unsubscribe(Reservation $reservation){
+        if ($reservation->user_id !== Auth::id()) {
+            abort(403);
+        }
+        $reservation->ticket()->delete();
+        $reservation->delete();
+        return redirect()
+            ->route('student.space')
+            ->with('success', 'Reservation cancelled successfully.');
+    }
+
 
 }

@@ -26,3 +26,4 @@ Route::put('update/event/{event}', [DashboardController::class, 'update'])->midd
 
 Route::get('student', [StudentController::class, 'index'])->middleware('auth')->name('student.space');
 Route::post('reserve/{event}', [StudentController::class, 'subscribe'])->middleware('auth')->name('reserve');
+Route::delete('cancel/reservation/{reservation}', [StudentController::class, 'unsubscribe'])->middleware('auth')->name('cancel.reservation');
