@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -10,8 +11,9 @@ class DashboardController extends Controller
 {
     public function index(){
         $events = Event::with('user')->latest()->get();
-
-        return view('dashboard', compact('events'));
+        $totalEvents = Event::count();
+        $totalReservations = Reservation::count();
+        return view('dashboard', compact('events','totalEvents','totalReservations'));
     }
 
     public function store(Request $request){

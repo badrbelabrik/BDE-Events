@@ -28,7 +28,7 @@
             <div class="bg-white p-5 border border-gray-200 rounded-xl shadow-sm flex items-center justify-between">
                 <div>
                     <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Total Events</p>
-                    <p class="text-2xl font-black text-gray-900 mt-1">12</p>
+                    <p class="text-2xl font-black text-gray-900 mt-1">{{$totalEvents}}</p>
                 </div>
                 <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-lg flex items-center justify-center text-xl">
                     <i class="fa-solid fa-calendar-days"></i>
@@ -38,30 +38,10 @@
             <div class="bg-white p-5 border border-gray-200 rounded-xl shadow-sm flex items-center justify-between">
                 <div>
                     <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Reservations</p>
-                    <p class="text-2xl font-black text-gray-900 mt-1">458</p>
+                    <p class="text-2xl font-black text-gray-900 mt-1">{{$totalReservations}}</p>
                 </div>
                 <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-lg flex items-center justify-center text-xl">
                     <i class="fa-solid fa-ticket"></i>
-                </div>
-            </div>
-
-            <div class="bg-white p-5 border border-gray-200 rounded-xl shadow-sm flex items-center justify-between">
-                <div>
-                    <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Total Capacity</p>
-                    <p class="text-2xl font-black text-gray-900 mt-1">600</p>
-                </div>
-                <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center text-xl">
-                    <i class="fa-solid fa-users"></i>
-                </div>
-            </div>
-
-            <div class="bg-white p-5 border border-gray-200 rounded-xl shadow-sm flex items-center justify-between">
-                <div>
-                    <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Avg Occupancy</p>
-                    <p class="text-2xl font-black text-gray-900 mt-1">76%</p>
-                </div>
-                <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-lg flex items-center justify-center text-xl">
-                    <i class="fa-solid fa-chart-pie"></i>
                 </div>
             </div>
         </div>
