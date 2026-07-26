@@ -196,16 +196,6 @@ routes/
 
 ---
 
-## 📊 UML
-
-The project includes:
-
-- Use Case Diagram
-- Class Diagram
-- Entity Relationship Diagram (ERD)
-
----
-
 ## 📋 Project Objectives
 
 This project was developed to practice:
