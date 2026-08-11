@@ -1,16 +1,34 @@
-import './App.css'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import {Home} from './components/Home.jsx'
-import {Login} from './pages/Login.jsx'
+
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+
+import Home from "./pages/Home";
 
 function App() {
-  return (
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-        </Routes>
-      </BrowserRouter>);
+    return (
+        <BrowserRouter>
+
+            <div className="bg-gray-100 font-sans antialiased text-gray-900 flex flex-col min-h-screen">
+
+                <Header />
+
+                <main className="flex-grow max-w-6xl mx-auto px-4 py-6 w-full">
+
+                    <Routes>
+
+                        <Route path="/" element={<Home />} />
+
+                    </Routes>
+
+                </main>
+
+                <Footer />
+
+            </div>
+
+        </BrowserRouter>
+    );
 }
 
-export default App
+export default App;
