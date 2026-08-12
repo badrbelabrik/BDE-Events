@@ -48,6 +48,8 @@ export default function Login() {
             // Redirect according to role
             if (response.data.user.role === "admin") {
                 navigate("/admin");
+            } else if (response.data.user.role === "student"){
+                navigate("/student-space");
             } else {
                 navigate("/");
             }
