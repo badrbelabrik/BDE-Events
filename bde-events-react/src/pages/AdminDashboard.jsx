@@ -56,8 +56,8 @@ export default function AdminDashboard() {
             setEvents(response.data.events || []);
 
             setStats({
-                totalEvents: response.data.totalEvents || 0,
-                totalReservations: response.data.totalReservations || 0
+                totalEvents: response.data.total_events || 0,
+                totalReservations: response.data.total_reservations || 0
             });
 
         } catch (error) {

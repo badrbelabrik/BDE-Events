@@ -86,7 +86,8 @@ class EventController extends Controller
 
     public function stats()
     {
-        $events = Event::withCount('reservations')
+        $events = Event::with(['user'])
+            ->withCount('reservations')
             ->latest()
             ->get();
 
@@ -96,6 +97,8 @@ class EventController extends Controller
         });
 
         return response()->json([
+            'total_events' => $events->count(),
+            'total_reservations' => $events->sum('reservations_count'),
             'events' => $events
         ]);
     }

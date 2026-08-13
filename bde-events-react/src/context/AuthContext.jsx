@@ -1,63 +1,119 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import api from "../services/api";
 
-const AuthContext = createContext();
+const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-    const [user, setUser] = useState(
-        JSON.parse(localStorage.getItem("user")) || null
-    );
 
+    const [user, setUser] = useState(null);
     const [token, setToken] = useState(
-        localStorage.getItem("token") || null
+        localStorage.getItem("token")
     );
+    const [loading, setLoading] = useState(true);
 
+    // Check the current user when the application starts
+    useEffect(() => {
+
+        const checkAuth = async () => {
+
+            if (!token) {
+                setLoading(false);
+                return;
+            }
+
+            try {
+
+                const response = await api.get("/user");
+
+                console.log("Current user:", response.data);
+
+                // Adjust this if your API returns user differently
+                setUser(response.data.user);
+
+            } catch (error) {
+
+                console.error("Authentication failed:", error);
+
+                localStorage.removeItem("token");
+                setToken(null);
+                setUser(null);
+
+            } finally {
+
+                setLoading(false);
+
+            }
+        };
+
+        checkAuth();
+
+    }, [token]);
+
+
+    // LOGIN
     const login = async (email, password) => {
+
         const response = await api.post("/login", {
             email,
-            password,
+            password
         });
 
-        const { user, token } = response.data;
+        console.log("LOGIN RESPONSE:", response.data);
 
-        localStorage.setItem("user", JSON.stringify(user));
-        localStorage.setItem("token", token);
+        const newToken = response.data.token;
 
-        setUser(user);
-        setToken(token);
+        // Save token
+        localStorage.setItem("token", newToken);
+
+        // Update React state immediately
+        setToken(newToken);
+        setUser(response.data.user);
 
         return response.data;
     };
 
+
+    // LOGOUT
     const logout = async () => {
+
         try {
+
             await api.post("/logout");
+
         } catch (error) {
-            console.error(error);
+
+            console.error("Logout API error:", error);
+
+        } finally {
+
+            // Remove authentication locally regardless of API response
+            localStorage.removeItem("token");
+
+            setToken(null);
+            setUser(null);
         }
+    };
 
-        localStorage.removeItem("user");
-        localStorage.removeItem("token");
 
-        setUser(null);
-        setToken(null);
+    const value = {
+        user,
+        token,
+        loading,
+        isAuthenticated: !!token,
+        login,
+        logout
     };
 
     return (
-        <AuthContext.Provider
-            value={{
-                user,
-                token,
-                login,
-                logout,
-                isAuthenticated: !!token,
-            }}
-        >
+        <AuthContext.Provider value={value}>
             {children}
         </AuthContext.Provider>
     );
 }
 
+
 export function useAuth() {
+
     return useContext(AuthContext);
+
 }

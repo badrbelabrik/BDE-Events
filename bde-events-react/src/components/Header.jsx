@@ -1,8 +1,18 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 function Header() {
     const { user, isAuthenticated, logout } = useAuth();
+    const navigate = useNavigate();
+    const handleLogout = async () => {
+        try {
+            await logout();
+        } finally {
+            // Always go back to homepage
+            navigate("/", { replace: true });
+        }
+    };
+
 
     return (
         <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
@@ -58,7 +68,7 @@ function Header() {
                             ) : (
                                 /* Student */
                                 <Link
-                                    to="/profile/tickets"
+                                    to="/student-space"
                                     className="flex flex-col items-center hover:text-indigo-600 px-1 py-1 transition"
                                 >
                                     <i className="fa-solid fa-ticket text-xl mb-0.5"></i>
@@ -102,11 +112,14 @@ function Header() {
 
                                     <div className="border-t border-gray-100 my-1"></div>
 
+                                    {/* Logout */}
                                     <button
-                                        onClick={logout}
+                                        type="button"
+                                        onClick={handleLogout}
                                         className="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 transition cursor-pointer font-medium"
                                     >
                                         <i className="fa-solid fa-arrow-right-from-bracket mr-2 text-xs"></i>
+
                                         Sign Out
                                     </button>
 

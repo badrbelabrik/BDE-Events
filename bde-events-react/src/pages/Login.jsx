@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import api from "../services/api";
+import { useAuth } from "../context/AuthContext";
 
 export default function Login() {
 
     const navigate = useNavigate();
+
+    const { login } = useAuth();
 
     const [formData, setFormData] = useState({
         email: "",
@@ -16,6 +18,7 @@ export default function Login() {
     const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
+
         const { name, value, type, checked } = e.target;
 
         setFormData({
@@ -25,33 +28,40 @@ export default function Login() {
     };
 
     const handleSubmit = async (e) => {
+
         e.preventDefault();
 
         setError("");
         setLoading(true);
 
         try {
-            const response = await api.post("/login", {
-                email: formData.email,
-                password: formData.password,
-            });
 
-            console.log(response.data);
+            // AuthContext handles:
+            // - API request
+            // - token
+            // - user
+            // - React authentication state
 
-            // Store authentication information
-            localStorage.setItem("token", response.data.token);
-            localStorage.setItem(
-                "user",
-                JSON.stringify(response.data.user)
+            const data = await login(
+                formData.email,
+                formData.password
             );
 
+            console.log("LOGIN:", data);
+
             // Redirect according to role
-            if (response.data.user.role === "admin") {
+            if (data.user.role === "admin") {
+
                 navigate("/admin");
-            } else if (response.data.user.role === "student"){
+
+            } else if (data.user.role === "student") {
+
                 navigate("/student-space");
+
             } else {
+
                 navigate("/");
+
             }
 
         } catch (error) {
@@ -59,17 +69,27 @@ export default function Login() {
             console.error(error);
 
             if (error.response?.status === 422) {
+
                 setError("Please check your email and password.");
+
             } else if (error.response?.status === 401) {
+
                 setError("Invalid email or password.");
+
             } else {
-                setError("Something went wrong. Please try again.");
+
+                setError(
+                    error.response?.data?.message ||
+                    "Something went wrong. Please try again."
+                );
             }
 
         } finally {
+
             setLoading(false);
         }
     };
+
 
     return (
         <div className="max-w-md mx-auto my-10">
@@ -89,15 +109,22 @@ export default function Login() {
 
                 </div>
 
-                {/* Error message */}
+
+                {/* Error */}
                 {error && (
+
                     <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 text-sm rounded-md">
                         {error}
                     </div>
+
                 )}
 
+
                 {/* Login form */}
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form
+                    onSubmit={handleSubmit}
+                    className="space-y-4"
+                >
 
                     {/* Email */}
                     <div>
@@ -207,7 +234,10 @@ export default function Login() {
 
                         <i className="fa-solid fa-right-to-bracket mr-1.5"></i>
 
-                        {loading ? "Signing In..." : "Sign In"}
+                        {loading
+                            ? "Signing In..."
+                            : "Sign In"
+                        }
 
                     </button>
 
